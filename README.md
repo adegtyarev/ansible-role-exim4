@@ -29,15 +29,13 @@ the /etc/exim4/update-exim4.conf.conf file
 * *exim4_dc_hide_mailname*: ''
 * *exim4_dc_mailname_in_oh*: 'true'
 * *exim4_dc_localdelivery*: 'mail_spool'
-* *exim4_passwd_client*: Account and password data for SMTP authentication when
-                         exim is authenticating as a client to some remote
-                         server as a list.
 
 The following variables are used in default templates to configure Exim4:
 
 * *exim4_custom_options*
 * *exim4_features_enable*
 * *exim4_features_disable*
+* *exim4_passwd_client*: Account and password data for SMTP authentication when exim is authenticating as a client to some remote server as a list.
 
 Usage
 -----
