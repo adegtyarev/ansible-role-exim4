@@ -1,0 +1,7 @@
+MAIN_TLS_CERTIFICATE=/etc/ssl/{{ exim4_ssl_certificate_name | default(ansible_fqdn) }}.crt
+MAIN_TLS_PRIVATEKEY=/etc/ssl/private/{{ exim4_ssl_certificate_key | default(ansible_fqdn) }}.key
+MAIN_TLS_ENABLE=1
+
+# Disable TLS on local connections due to:
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737921
+MAIN_TLS_ADVERTISE_HOSTS = ${if match {$sender_host_name}{localhost}{nope}{*} }

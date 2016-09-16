@@ -1,0 +1,16 @@
+
+### router/410_exim4-config_system_aliases_pipe
+#################################
+
+# This router handles aliasing using a traditional /etc/aliases file with pipe support.
+
+system_aliases_pipe:
+  debug_print = "R: system_aliases_pipe for $local_part@$domain"
+  driver = redirect
+  domains = +local_domains
+  allow_fail
+  allow_defer
+  data = ${lookup{$local_part}lsearch*{/etc/aliases}}
+  user = daemon
+  group = daemon
+  pipe_transport = system_aliases_pipe

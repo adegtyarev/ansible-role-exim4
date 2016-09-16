@@ -1,0 +1,4 @@
+ldap_default_servers = <; {{ ldap_server }}:636
+ldap_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
+
+LDAP_AUTH = user="{{ ldap_default_bind_dn }}" pass="{{ ldap_default_authtok }}"

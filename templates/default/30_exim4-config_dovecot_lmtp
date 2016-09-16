@@ -1,0 +1,7 @@
+dovecot_lmtp:
+    driver = lmtp
+    socket = /var/run/dovecot/lmtp
+    #maximum number of deliveries per batch, default 1
+    batch_max = 200
+    user = Debian-exim
+    current_directory = /var/mail

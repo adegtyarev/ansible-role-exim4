@@ -1,0 +1,17 @@
+---
+
+exim4_package_name: exim4-daemon-light  # exim4-daemon-heavy
+
+exim4_dc_eximconfig_configtype: internet
+exim4_dc_other_hostnames: "{{ ansible_hostname }}"
+exim4_dc_local_interfaces: '127.0.0.1 ; ::1'
+exim4_dc_readhost: ''
+exim4_dc_relay_domains: ''
+exim4_dc_minimaldns: 'false'
+exim4_dc_relay_nets: ''
+exim4_dc_smarthost: ''
+exim4_CFILEMODE: '644'
+exim4_dc_use_split_config: 'false'
+exim4_dc_hide_mailname: ''
+exim4_dc_mailname_in_oh: 'true'
+exim4_dc_localdelivery: 'mail_spool'

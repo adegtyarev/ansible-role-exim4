@@ -1,0 +1,21 @@
+ldapauth_login:
+  driver = plaintext
+  server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
+  public_name = LOGIN
+  server_prompts = Username:: : Password::
+  server_condition = ${if ldapauth \
+     {user="uid=${quote_ldap_dn:$auth1},{{ ldap_search_base }}" \
+     pass=${quote:$auth2} \
+     ldaps:///}}
+  server_set_id = $1
+
+ldapauth_plain:
+  driver = plaintext
+  server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
+  public_name = PLAIN
+  server_prompts = :
+  server_condition = ${if ldapauth \
+     {user="uid=${quote_ldap_dn:$auth2},{{ ldap_search_base }}" \
+     pass=${quote:$auth3} \
+     ldaps:///}}
+  server_set_id = $2

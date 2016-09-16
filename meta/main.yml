@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Alexey Degtyarev
+  description: An Ansible role that installs and configures Exim4
+
+  license: BSD
+
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+
+  galaxy_tags:
+  - mail
+  - exim4
+
+dependencies: []

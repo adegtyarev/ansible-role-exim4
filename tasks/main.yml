@@ -1,0 +1,70 @@
+---
+
+- name: Install Exim4 package
+  action: apt
+  args:
+    name: "{{ exim4_package_name }}"
+    state: present
+  tags:
+    - packages
+    - exim4
+
+- name: Configure update-exim4.conf.conf
+  action: template
+  args:
+    src: update-exim4.conf.j2
+    dest: /etc/exim4/update-exim4.conf.conf
+  notify: update exim4.conf
+  tags:
+    - exim4
+    - exim4-reconfigure
+
+- name: Enable exim4 features
+  when: exim4_features_enable is defined and exim4_features_enable
+  action: template
+  args:
+    src: "{{ exim4_src | default('default') }}/{{ item.name }}"
+    dest: "/etc/exim4/conf.d/{{ item.group }}/{{ item.name}}"
+  with_items: "{{ exim4_features_enable }}"
+  notify: update exim4.conf.template
+  tags:
+    - exim4
+    - exim4-reconfigure
+
+- name: Disable exim4 features
+  when: exim4_features_disable is defined and exim4_features_disable
+  action: file
+  args:
+    dest: "/etc/exim4/conf.d/{{ item.group }}/{{ item.name}}"
+    state: absent
+  with_items: "{{ exim4_features_disable }}"
+  notify: update exim4.conf.template
+  tags:
+    - exim4
+    - exim4-reconfigure
+
+- name: Configure /etc/passwd.client
+  when: exim4_passwd_client is defined and exim4_passwd_client
+  action: template
+  args:
+    src: passwd.client.2
+    dest: /etc/exim4/passwd.client
+    owner: root
+    group: Debian-exim
+    mode: 0640
+  notify: update exim4.conf
+  tags:
+    - exim4
+    - exim4-reconfigure
+
+- name: Add Exim user into SSL group
+  when: authldap is not defined or not authldap
+  action: user
+  args:
+    name: Debian-exim
+    groups: ssl-cert
+    append: yes
+  notify: restart exim4
+  tags:
+    - exim4
+    - exim4-user

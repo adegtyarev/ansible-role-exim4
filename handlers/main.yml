@@ -1,0 +1,15 @@
+---
+
+- name: update exim4.conf.template
+  shell: update-exim4.conf.template -r
+  notify: update exim4
+
+- name: update exim4.conf
+  shell: /usr/sbin/update-exim4.conf
+  notify: reload exim4
+
+- name: reload exim4
+  service: name=exim4 state=reloaded
+
+- name: restart exim4
+  service: name=exim4 state=restarted
