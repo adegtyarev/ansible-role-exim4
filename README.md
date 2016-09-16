@@ -64,7 +64,7 @@ to let the daemon to access SSL certificates and keys.
 
 Setup desired options.  For example:
 
-``
+```
   roles:
     - role: degtyarevalexey.exim4
       exim4_package_name: exim4-daemon-heavy
