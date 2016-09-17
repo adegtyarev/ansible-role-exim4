@@ -2,7 +2,7 @@
 
 - name: update exim4.conf.template
   shell: update-exim4.conf.template -r
-  notify: update exim4
+  notify: update exim4.conf
 
 - name: update exim4.conf
   shell: /usr/sbin/update-exim4.conf
