@@ -39,6 +39,7 @@ The following variables are used in default templates to configure Exim4:
 * *exim4_features_disable*
 * *exim4_passwd_client*: Account and password data for SMTP authentication when exim is authenticating as a client to some remote server as a list.
 * *exim4_conf_keyvalue*: a dictionaly of key-value files to put in `/etc/exim4/`
+* *exim4_conf_values*: a list of files with one-per-line values to put in `/etc/exim4/`
 
 Usage
 -----
@@ -93,6 +94,11 @@ Setup desired options.  For example:
         - name: hubbed_hosts
           data:
             example.com: mail.example.com
+
+      exim4_conf_values:
+        - name: local_rcpt_callout
+          data:
+            - "*@example.com"
 
 ```
 

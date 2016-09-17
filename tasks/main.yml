@@ -73,6 +73,22 @@
     - exim4-reconfigure
     - exim4-reconfigure-keyvalue
 
+- name: Add single values configuration
+  when: exim4_conf_values is defined and exim4_conf_values
+  action: template
+  args:
+    src: values.j2
+    dest: "/etc/exim4/{{ item.name }}"
+    owner: root
+    group: Debian-exim
+    mode: 0640
+  with_items: "{{ exim4_conf_values }}"
+  notify: reload exim4
+  tags:
+    - exim4
+    - exim4-reconfigure
+    - exim4-reconfigure-values
+
 - name: Add Exim user into SSL group
   when: authldap is not defined or not authldap
   action: user
