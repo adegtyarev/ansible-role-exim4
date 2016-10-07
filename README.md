@@ -41,6 +41,12 @@ The following variables are used in default templates to configure Exim4:
 * *exim4_conf_keyvalue*: a dictionaly of key-value files to put in `/etc/exim4/`
 * *exim4_conf_values*: a list of files with one-per-line values to put in `/etc/exim4/`
 
+The following features are built into this role:
+
+* *00_exim4-config_tls*: Enable TLS in Exim
+* *02_exim4-custom_options*: Custom options to add into config
+...
+
 Usage
 -----
 
