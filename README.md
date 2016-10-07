@@ -110,10 +110,6 @@ to let the daemon to access SSL certificates and keys.
 
 Setup desired options.  For example:
 
-```
-  roles:
-    - role: degtyarevalexey.exim4
-
       exim4_package_name: exim4-daemon-heavy
 
       exim4_dc_localdelivery: dovecot_lmtp
@@ -143,8 +139,6 @@ Setup desired options.  For example:
         - name: local_rcpt_callout
           data:
             - "*@example.com"
-
-```
 
 The following tags may be used to re-configure Exim4:
 
