@@ -21,24 +21,24 @@ For **exim4_package_name** value good choice is also `exim4-daemon-heavy` or any
 ### Using lists of dictionaries
 
 **exim4_conf_keyvalue** used to create config files with key-value pairs of data.  For example, to configure a list of route_data records which can be used to override or augment MX information from the DNS: 
-
-    exim4_conf_keyvalue:
-      - name: hubbed_hosts
-        data:
-          example.com: mail.example.com
-          example.net: mail.example.net
-
+```yaml
+exim4_conf_keyvalue:
+  - name: hubbed_hosts
+    data:
+      example.com: mail.example.com
+      example.net: mail.example.net
+```
 As a result, file `/etc/exim4/hubbed_hosts` will be created with key-value pairs of domain pattern and route data.
 
 **exim4_conf_values** used to create config files with flat list values.  For example, to configure a list of envelope
 recipients for which incoming messages are subject to recipient verification with a callout:
-
-    exim4_conf_values:
-      - name: local_rcpt_callout
-        data:
-          - "*@example.com"
-          - "*@example.net"
-
+```yaml
+exim4_conf_values:
+  - name: local_rcpt_callout
+    data:
+      - "*@example.com"
+      - "*@example.net"
+```
 As a result, file with address list `/etc/exim4/local_rcpt_callout` will be created.
 
 For more info about files in use by the Debian exim4 package, please consult `man exim4-config_files`
@@ -91,15 +91,15 @@ Usage
 Download a role onto your Ansible host using the ansible-galaxy command that
 comes bundled with Ansible.
 
-```
+```shell
 $ ansible-galaxy install degtyarevalexey.exim4
 ```
 
 Define a role in your playbook and setup desired options.  For example:
 
-```
-  roles:
-    - role: degtyarevalexey.exim4
+```yaml
+roles:
+  - role: degtyarevalexey.exim4
 ```
 
 The defaults installs `exim4-daemon-light` package and no additional
@@ -109,36 +109,37 @@ Note that this role adds default Exim user `Debian-exim` into group `ssl-cert`
 to let the daemon to access SSL certificates and keys.
 
 Setup desired options.  For example:
+```yaml
+exim4_package_name: exim4-daemon-heavy
 
-      exim4_package_name: exim4-daemon-heavy
+exim4_dc_localdelivery: dovecot_lmtp
+exim4_dc_local_interfaces: "{{ ansible_all_ipv4_addresses | join(',') }}"
 
-      exim4_dc_localdelivery: dovecot_lmtp
-      exim4_dc_local_interfaces: "{{ ansible_all_ipv4_addresses | join(',') }}"
+exim4_custom_options:
+  - daemon_smtp_ports: "25 : 465 : 587"
+  - rfc1413_query_timeout: 0s
+  - smtp_banner: "ESMTP server ready $tod_full"
 
-      exim4_custom_options:
-        - daemon_smtp_ports: "25 : 465 : 587"
-        - rfc1413_query_timeout: 0s
-        - smtp_banner: "ESMTP server ready $tod_full"
+exim4_features_enable:
+  - name: 02_exim4-custom_options
+    group: main
+  - name: 30_exim4-config_dovecot_lmtp
+    group: transport
 
-      exim4_features_enable:
-        - name: 02_exim4-custom_options
-          group: main
-        - name: 30_exim4-config_dovecot_lmtp
-          group: transport
+exim4_features_disable:
+  - name: 30_exim4-config_examples
+    group: auth
 
-      exim4_features_disable:
-        - name: 30_exim4-config_examples
-          group: auth
+exim4_conf_keyvalue:
+  - name: hubbed_hosts
+    data:
+      example.com: mail.example.com
 
-      exim4_conf_keyvalue:
-        - name: hubbed_hosts
-          data:
-            example.com: mail.example.com
-
-      exim4_conf_values:
-        - name: local_rcpt_callout
-          data:
-            - "*@example.com"
+exim4_conf_values:
+  - name: local_rcpt_callout
+    data:
+      - "*@example.com"
+```
 
 The following tags may be used to re-configure Exim4:
 
