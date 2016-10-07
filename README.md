@@ -41,7 +41,7 @@ recipients for which incoming messages are subject to recipient verification wit
 
 As a result, file with address list `/etc/exim4/local_rcpt_callout` will be created.
 
-For mor info about files in use by the Debian exim4 package, please consult `man exim4-config_files`
+For more info about files in use by the Debian exim4 package, please consult `man exim4-config_files`
 
 ### Maintaining update-exim4.conf.conf
 
