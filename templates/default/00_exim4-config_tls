@@ -1,5 +1,5 @@
-MAIN_TLS_CERTIFICATE=/etc/ssl/{{ exim4_ssl_certificate_name | default(ansible_fqdn) }}.crt
-MAIN_TLS_PRIVATEKEY=/etc/ssl/private/{{ exim4_ssl_certificate_key | default(ansible_fqdn) }}.key
+MAIN_TLS_CERTIFICATE=/etc/ssl/{{ exim4_tls_certificate | default(ansible_fqdn) }}.crt
+MAIN_TLS_PRIVATEKEY=/etc/ssl/private/{{ exim4_tls_privatekey | default(ansible_fqdn) }}.key
 MAIN_TLS_ENABLE=1
 
 # Disable TLS on local connections due to:
