@@ -3,36 +3,46 @@ Ansible Role: Exim4
 
 [![Build Status](https://travis-ci.org/degtyarevalexey/ansible-role-exim4.svg?branch=master)](https://travis-ci.org/degtyarevalexey/ansible-role-exim4)
 
-Ansbile role to install and configure Exim4 on Debian based system.
+Ansbile role to install and configure Exim4 on Debian or Ubuntu system.
 
 With that role you may fine tune your Exim4 installation using variables.
 
 Role Variables
 --------------
 
-* *exim4_package_name*: exim4-daemon-light 
+**exim4_package_name**: exim4-daemon-light
 
-Sets the package name to install.  Good choice is also `exim4-daemon-heavy` or
+Sets the package name to install.  Good choice for value is also `exim4-daemon-heavy` or
 any other name available for your system.
 
 The following variables and their default values are used for the content of
-the /etc/exim4/update-exim4.conf.conf file
+the `/etc/exim4/update-exim4.conf.conf` file:
 
-* *exim4_dc_eximconfig_configtype*: internet
-* *exim4_dc_other_hostnames*: "{{ ansible_hostname }}"
-* *exim4_dc_local_interfaces*: '127.0.0.1 ; ::1'
-* *exim4_dc_readhost*: ''
-* *exim4_dc_relay_domains*: ''
-* *exim4_dc_minimaldns*: 'false'
-* *exim4_dc_relay_nets*: ''
-* *exim4_dc_smarthost*: ''
-* *exim4_CFILEMODE*: '644'
-* *exim4_dc_use_split_config*: 'false'
-* *exim4_dc_hide_mailname*: ''
-* *exim4_dc_mailname_in_oh*: 'true'
-* *exim4_dc_localdelivery*: 'mail_spool'
+Variable | Default value | Description 
+-------- | ------------- | -------------
+**exim4_dc_eximconfig_configtype** | internet | Mail server configuration type
+**exim4_dc_other_hostnames** | ansible_hostname | Other destinations for which mail is accepted
+**exim4_dc_local_interfaces** | 127.0.0.1 ; ::1 | IP-addresses to listen on
+**exim4_dc_minimaldns** | false | Keep number of DNS-queries minimal |
+**exim4_dc_localdelivery** | mail_spool | Delivery method for local mail
+**exim4_dc_use_split_config** | false | Split configuration into small files?
+**exim4_dc_mailname_in_oh** | true | Internal  use only
+**exim4_dc_relay_nets** | _empty_ | Machines to relay mail for
+**exim4_dc_relay_domains** | _empty_ | Domains to relay mail for
+**exim4_CFILEMODE** | 644 | The octal file mode of the generated file
 
-The following variables are used in default templates to configure Exim4:
+Smarthost-specific variables:
+
+Variable | Default value | Description 
+-------- | ------------- | -------------
+**exim4_dc_smarthost** | _empty_ | IP address or host name of the outgoing smarthost
+**exim4_dc_hide_mailname** | _empty_ | Hide local mail name in outgoing mail?
+**exim4_dc_readhost** | _empty_ | Visible domain name for local users
+
+For more info about the meaning of these configuration variables please consult
+man page for `update-exim4.conf`.
+
+The following variables are used in default template to configure Exim4:
 
 * *exim4_custom_options*
 * *exim4_features_enable*
