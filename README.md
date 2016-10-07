@@ -10,10 +10,40 @@ With that role you may fine tune your Exim4 installation using variables.
 Role Variables
 --------------
 
-**exim4_package_name**: exim4-daemon-light
+Variable | Default value | Description 
+-------- | ------------- | -------------
+**exim4_package_name** |  exim4-daemon-light | Sets the package name to install
+**exim4_conf_keyvalue** | _empty_ | A lists of dictionaries of key-values (see below)
+**exim4_conf_values** | _empty_ | A lists of dictionaries with one-per-line values (see below)
 
-Sets the package name to install.  Good choice for value is also `exim4-daemon-heavy` or
-any other name available for your system.
+For **exim4_package_name** value good choice is also `exim4-daemon-heavy` or any other name available for your system.
+
+### Using lists of dictionaries
+
+**exim4_conf_keyvalue** used to create config files with key-value pairs of data.  For example, to configure a list of route_data records which can be used to override or augment MX information from the DNS: 
+
+    exim4_conf_keyvalue:
+      - name: hubbed_hosts
+        data:
+          example.com: mail.example.com
+          example.net: mail.example.net
+
+As a result, file `/etc/exim4/hubbed_hosts` will be created with key-value pairs of domain pattern and route data.
+
+**exim4_conf_values** used to create config files with flat list values.  For example, to configure a list of envelope
+recipients for which incoming messages are subject to recipient verification with a callout:
+
+    exim4_conf_values:
+      - name: local_rcpt_callout
+        data:
+          - "*@example.com"
+          - "*@example.net"
+
+As a result, file with address list `/etc/exim4/local_rcpt_callout` will be created.
+
+For mor info about files in use by the Debian exim4 package, please consult `man exim4-config_files`
+
+### Maintaining update-exim4.conf.conf
 
 The following variables and their default values are used for the content of
 the `/etc/exim4/update-exim4.conf.conf` file:
@@ -48,8 +78,6 @@ The following variables are used in default template to configure Exim4:
 * *exim4_features_enable*
 * *exim4_features_disable*
 * *exim4_passwd_client*: Account and password data for SMTP authentication when exim is authenticating as a client to some remote server as a list.
-* *exim4_conf_keyvalue*: a dictionaly of key-value files to put in `/etc/exim4/`
-* *exim4_conf_values*: a list of files with one-per-line values to put in `/etc/exim4/`
 
 The following features are built into this role:
 
