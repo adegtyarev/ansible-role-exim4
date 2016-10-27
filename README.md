@@ -119,11 +119,11 @@ first and last lines, and line breaks removed as well.
 
 The following variables and their default values are used:
 
-```
-exim4_dkim_keysize: 2048
-exim4_dkim_canon: relaxed
-exim4_dkim_selector: dkim
-```
+Variable | Default value | Description
+-------- | ------------- | -------------
+**exim4_dkim_keysize** | 2048 | Key size
+**exim4_dkim_canon** | relaxed | This option sets the canonicalization method used when signing a message.
+**exim4_dkim_selector** | dkim | This sets the key selector string.
 
 You may want to adjust them to best suite your setup.
 
