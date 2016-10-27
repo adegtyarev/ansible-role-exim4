@@ -122,8 +122,8 @@ The following variables and their default values are used:
 Variable | Default value | Description
 -------- | ------------- | -------------
 **exim4_dkim_keysize** | 2048 | Key size
-**exim4_dkim_canon** | relaxed | This option sets the canonicalization method used when signing a message.
-**exim4_dkim_selector** | dkim | This sets the key selector string.
+**exim4_dkim_canon** | relaxed | Canonicalization method used when signing a message
+**exim4_dkim_selector** | dkim | Key selector string
 
 You may want to adjust them to best suite your setup.
 
