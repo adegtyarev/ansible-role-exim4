@@ -85,6 +85,49 @@ The following features are built into this role:
 * *02_exim4-custom_options*: Custom options to add into config
 ...
 
+Configure DKIM in Exim4
+-----------------------
+
+Configure Exim to sign outgoing messages with DKIM is as easy as:
+
+```yaml
+exim4_dkim_enable: true
+
+exim4_features_enable:
+    - name: 30_exim4-config_dkim
+      group: main
+```
+
+To re-configure existing Exim installation, add this variables to appropriate
+group- or host- vars and then run Ansible with `exim4-dkim,exim4-reconfigure`
+tags:
+
+```shell
+ansible-playbook -t exim4-dkim,exim4-reconfigure playbook.yml
+```
+
+This will generate a public/private key which will be used for signing and
+validation.  You will need to publish the resulting public key using a TXT
+record:
+
+```
+dkim._domainkey.example.com IN TXT "k=rsa; p={{PUBLIC_KEY}}"
+```
+
+Where `{{PUBLIC_KEY}}` is content of `/etc/exim4/dkim.public` with removed
+first and last lines, and line breaks removed as well.
+
+The following variables and their default values are used:
+
+```
+exim4_dkim_keysize: 2048
+exim4_dkim_canon: relaxed
+exim4_dkim_selector: dkim
+```
+
+You may want to adjust them to best suite your setup.
+
+
 Usage
 -----
 

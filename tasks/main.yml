@@ -100,3 +100,9 @@
   tags:
     - exim4
     - exim4-user
+
+- include: dkim.yml
+  when: exim4_dkim_enable
+  tags:
+    - exim4
+    - exim4-dkim

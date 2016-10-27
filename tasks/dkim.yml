@@ -1,0 +1,37 @@
+---
+
+- name: Generate DKIM private key
+  command: openssl genrsa -out dkim.private {{ exim4_dkim_keysize }} -outform PEM
+  args:
+    chdir: /etc/exim4
+    creates: /etc/exim4/dkim.private
+  notify: reload exim4
+  tags:
+    - exim4
+    - exim4-dkim
+
+- name: Setup DKIM public key
+  command: openssl rsa -in dkim.private -out dkim.public -pubout -outform PEM
+  args:
+    chdir: /etc/exim4
+    creates: /etc/exim4/dkim.public
+  notify: reload exim4
+  tags:
+    - exim4
+    - exim4-dkim
+
+- name: Setup private key permissions
+  action: file
+  args:
+    dest: "{{ item.name }}"
+    owner: root
+    group: Debian-exim
+    mode: "{{ item.mode }}"
+  with_items:
+    - name: /etc/exim4/dkim.private
+      mode: 640
+    - name: /etc/exim4/dkim.public
+      mode: 644
+  tags:
+    - exim4
+    - exim4-dkim

@@ -1,0 +1,4 @@
+DKIM_CANON = {{ exim4_dkim_canon }}
+DKIM_DOMAIN = ${sender_address_domain}
+DKIM_PRIVATE_KEY = CONFDIR/dkim.private
+DKIM_SELECTOR = {{ exim4_dkim_selector }}
