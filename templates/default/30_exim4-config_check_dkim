@@ -1,0 +1,14 @@
+# By default, this ACL is called once for each syntactically correct signature
+# in the incoming message.
+
+acl_check_dkim:
+    warn  set acl_m_dkim  = $dkim_verify_status
+
+    warn  dkim_status  = invalid:fail
+          add_header   = :at_start:Authentication-Results: $primary_hostname; dkim=$dkim_verify_status (reason: $dkim_verify_reason)
+            
+    warn  dkim_status  = pass
+          add_header   = :at_start:Authentication-Results: $primary_hostname; dkim=$dkim_verify_status (verification succeeded)
+            
+    accept
+
