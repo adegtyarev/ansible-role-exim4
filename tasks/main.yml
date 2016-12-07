@@ -89,6 +89,22 @@
     - exim4-reconfigure
     - exim4-reconfigure-values
 
+- name: Setup logrotate
+  action: template
+  args:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/{{ item.name }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - "{{ exim4_logrotate_base }}"
+    - "{{ exim4_logrotate_paniclog }}"
+  tags:
+    - exim4
+    - exim4-reconfigure
+    - exim4-reconfigure-logrotate
+
 - name: Add Exim user into SSL group
   when: authldap is not defined or not authldap
   action: user

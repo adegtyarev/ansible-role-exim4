@@ -1,0 +1,9 @@
+{{ item.path }} {
+	{{ item.type }}
+	missingok
+	rotate {{ item.rotate |default(10) }}
+	compress
+	delaycompress
+	notifempty
+	create {{ item.create |default('640 Debian-exim adm') }}
+}

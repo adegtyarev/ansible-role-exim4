@@ -128,6 +128,38 @@ Variable | Default value | Description
 You may want to adjust them to best suite your setup.
 
 
+Maintaining Exim4 log rotation
+------------------------------
+
+By default this role keep log rotation settings as it is set in a Debian package.
+To adjust these settings the following variables are used:
+
+```yaml
+exim4_logrotate_base:
+  - name: exim4-base
+    path: /var/log/exim4/mainlog /var/log/exim4/rejectlog
+    type: daily
+    rotate: 10
+    create: 640 Debian-exim adm
+
+exim4_logrotate_paniclog:
+  - name: exim4-paniclog
+    path: /var/log/exim4/paniclog
+    type: size 10M
+    rotate: 10
+    create: 640 Debian-exim adm
+```
+
+This example setup rotation of mainlog and rejectlog on a monthly basis:
+
+```yaml
+exim4_logrotate_base:
+  - name: exim4-base
+    path: /var/log/exim4/mainlog /var/log/exim4/rejectlog
+    type: monthly
+```
+
+
 Usage
 -----
 
@@ -188,6 +220,7 @@ The following tags may be used to re-configure Exim4:
 
 * *exim4*: runs all tasks in role unless explicitly disabled
 * *exim4-reconfigure*: run re-confguration to apply updated parameters (if any)
+* *exim4-reconfigure-logrotate*: re-configure log rotation
 
 License
 -------

@@ -26,3 +26,17 @@ exim4_conf_values: false
 
 exim4_features_enable: []
 exim4_features_disable: []
+
+exim4_logrotate_base:
+  - name: exim4-base
+    path: /var/log/exim4/mainlog /var/log/exim4/rejectlog
+    type: daily
+    rotate: 10
+    create: 640 Debian-exim adm
+
+exim4_logrotate_paniclog:
+  - name: exim4-paniclog
+    path: /var/log/exim4/paniclog
+    type: size 10M
+    rotate: 10
+    create: 640 Debian-exim adm
