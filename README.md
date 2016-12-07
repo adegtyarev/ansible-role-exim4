@@ -7,6 +7,32 @@ Ansbile role to install and configure Exim4 on Debian or Ubuntu system.
 
 With that role you may fine tune your Exim4 installation using variables.
 
+Usage
+-----
+
+Download a role onto your Ansible host using the ansible-galaxy command that
+comes bundled with Ansible.
+
+```shell
+$ ansible-galaxy install degtyarevalexey.exim4
+```
+
+Define a role in your playbook and setup desired options.  For example:
+
+```yaml
+roles:
+  - role: degtyarevalexey.exim4
+```
+
+The defaults installs `exim4-daemon-light` package and no additional
+configuration is made except the defaults for the OS.  This role follows Debian
+package concept of configuring Exim.  See below how to enable or disable
+features in your setup.
+
+Note that this role adds default Exim user `Debian-exim` into group `ssl-cert`
+to let the daemon to access SSL certificates and keys.
+
+
 Role Variables
 --------------
 
@@ -75,8 +101,6 @@ man page for `update-exim4.conf`.
 The following variables are used in default template to configure Exim4:
 
 * *exim4_custom_options*
-* *exim4_features_enable*
-* *exim4_features_disable*
 * *exim4_passwd_client*: Account and password data for SMTP authentication when exim is authenticating as a client to some remote server as a list.
 
 The following features are built into this role:
@@ -160,44 +184,16 @@ exim4_logrotate_base:
 ```
 
 
-Usage
------
+Enable of disable features in Exim4
+-----------------------------------
 
-Download a role onto your Ansible host using the ansible-galaxy command that
-comes bundled with Ansible.
-
-```shell
-$ ansible-galaxy install degtyarevalexey.exim4
-```
-
-Define a role in your playbook and setup desired options.  For example:
+Enable or disable Exim4 features for your setup. For example:
 
 ```yaml
-roles:
-  - role: degtyarevalexey.exim4
-```
-
-The defaults installs `exim4-daemon-light` package and no additional
-configuration made except the defaults for OS.
-
-Note that this role adds default Exim user `Debian-exim` into group `ssl-cert`
-to let the daemon to access SSL certificates and keys.
-
-Setup desired options.  For example:
-```yaml
-exim4_package_name: exim4-daemon-heavy
-
-exim4_dc_localdelivery: dovecot_lmtp
-exim4_dc_local_interfaces: "{{ ansible_all_ipv4_addresses | join(',') }}"
-
-exim4_custom_options:
-  - daemon_smtp_ports: "25 : 465 : 587"
-  - rfc1413_query_timeout: 0s
-  - smtp_banner: "ESMTP server ready $tod_full"
-
 exim4_features_enable:
   - name: 02_exim4-custom_options
     group: main
+
   - name: 30_exim4-config_dovecot_lmtp
     group: transport
 
@@ -205,16 +201,20 @@ exim4_features_disable:
   - name: 30_exim4-config_examples
     group: auth
 
-exim4_conf_keyvalue:
-  - name: hubbed_hosts
-    data:
-      example.com: mail.example.com
-
-exim4_conf_values:
-  - name: local_rcpt_callout
-    data:
-      - "*@example.com"
+exim4_custom_options:
+  - daemon_smtp_ports: "25 : 465 : 587"
+  - rfc1413_query_timeout: 0s
+  - smtp_banner: "ESMTP server ready $tod_full"
 ```
+
+This will enable builtin features:
+* `02_exim4-custom_options` in config group `main`
+* `30_exim4-config_dovecot_lmtp` in config group `transport`
+
+And disable `30_exim4-config_examples` feature if exist in `/etc/exim/conf.d/auth`.
+
+Feature `02_exim4-custom_options` adds custom options provided in
+`exim4_custom_options` into Exim4 config.
 
 The following tags may be used to re-configure Exim4:
 
