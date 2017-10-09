@@ -1,7 +1,7 @@
 Ansible Role: Exim4
 ===================
 
-[![Build Status](https://travis-ci.org/degtyarevalexey/ansible-role-exim4.svg?branch=master)](https://travis-ci.org/degtyarevalexey/ansible-role-exim4)
+[![Build Status](https://travis-ci.org/adegtyarev/ansible-role-exim4.svg?branch=master)](https://travis-ci.org/adegtyarev/ansible-role-exim4)
 
 Ansbile role to install and configure Exim4 on Debian or Ubuntu system.
 
@@ -14,14 +14,14 @@ Download a role onto your Ansible host using the ansible-galaxy command that
 comes bundled with Ansible.
 
 ```shell
-$ ansible-galaxy install degtyarevalexey.exim4
+$ ansible-galaxy install adegtyarev.exim4
 ```
 
 Define a role in your playbook and setup desired options.  For example:
 
 ```yaml
 roles:
-  - role: degtyarevalexey.exim4
+  - role: adegtyarev.exim4
 ```
 
 The defaults installs `exim4-daemon-light` package and no additional
