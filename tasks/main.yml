@@ -47,7 +47,7 @@
   when: exim4_passwd_client is defined and exim4_passwd_client
   action: template
   args:
-    src: passwd.client.2
+    src: passwd.client.j2
     dest: /etc/exim4/passwd.client
     owner: root
     group: Debian-exim
