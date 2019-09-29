@@ -1,5 +1,5 @@
 {% if exim4_custom_options is defined and exim4_custom_options %}
-{% for key, value in exim4_custom_options.iteritems() %}
+{% for key, value in exim4_custom_options.items() %}
 {{ key }} = {{ value }}
 {% endfor %}
 {% endif %}
