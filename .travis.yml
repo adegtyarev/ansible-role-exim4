@@ -23,8 +23,8 @@ install:
 
 script:
   # Basic role syntax check
-  - /usr/local/bin/ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - sudo /usr/local/bin/ansible-playbook tests/test.yml -i tests/inventory --connection=local
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - ansible-playbook tests/test.yml -i tests/inventory --connection=local --become
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
