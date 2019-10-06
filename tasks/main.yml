@@ -105,6 +105,16 @@
     - exim4-reconfigure
     - exim4-reconfigure-logrotate
 
+- name: Ensure SSL cert group exists
+  when: authldap is not defined or not authldap
+  action: group
+  args:
+    name: ssl-cert
+    state: present
+  tags:
+    - exim4
+    - exim4-user
+
 - name: Add Exim user into SSL group
   when: authldap is not defined or not authldap
   action: user
