@@ -7,6 +7,6 @@
 ### target.mail.server.example:login:password
 {% if exim4_passwd_client is defined %}
 {% for item in exim4_passwd_client %}
-{{ item }}
+{{ item ['mail_server']}}:{{ item ['login']}}:{{ item ['password']}}
 {% endfor %}
 {% endif %}

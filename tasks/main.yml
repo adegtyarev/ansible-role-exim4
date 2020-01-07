@@ -126,6 +126,7 @@
   tags:
     - exim4
     - exim4-user
+  when: exim4_ssl_cert | default(true)
 
 - include: dkim.yml
   when: exim4_dkim_enable

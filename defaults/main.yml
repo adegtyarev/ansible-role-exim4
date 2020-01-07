@@ -40,3 +40,8 @@ exim4_logrotate_paniclog:
     type: size 10M
     rotate: 10
     create: 640 Debian-exim adm
+
+# exim4_passwd_client:
+#   - mail_server: example.net
+#     login: example_user
+#     password: example_password
